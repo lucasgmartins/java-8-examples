@@ -5,17 +5,30 @@ import org.junit.Test;
 
 public class DefaultModifierTest {
 
-	public static interface Fighter {  
+	public interface Fighter {  
 		default String fight() {
 			return "Fight with knife";
 		}
 	}
 	
-	public static class HumanFighter implements Fighter {}
-	public static class GlobinFighter implements Fighter {
+	public interface BasicFighter {
+		default String fight(){
+			return "Fight with hand";
+		}
+	}
+	
+	public class HumanFighter implements Fighter {}
+	public class GlobinFighter implements Fighter {
 		@Override
 		public String fight() {
 			return "Fight with axe";
+		}
+	}
+	
+	public class PoorFighter implements BasicFighter, Fighter {
+		@Override
+		public String fight() {
+			return BasicFighter.super.fight();
 		}
 	}
 	
@@ -30,5 +43,12 @@ public class DefaultModifierTest {
 		
 		GlobinFighter globinFighter = new GlobinFighter();
 		Assert.assertEquals("Fight with axe", globinFighter.fight());
+	}
+	
+	@Test
+	public void testCreateClassWithMultipleInterfaceAndUsingSameNameOfDefaultMethod() throws Exception {
+		
+		PoorFighter poorFighter = new PoorFighter();
+		Assert.assertEquals("Fight with hand", poorFighter.fight());
 	}
 }
