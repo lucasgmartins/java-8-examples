@@ -1,7 +1,7 @@
 # Java 8 - Examples
 ### MEDIUM
 
-https://medium.com/@_luckymartins/
+https://medium.com/@lucasflice/
 
 ### Articles - PT-br
  
